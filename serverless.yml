@@ -21,13 +21,16 @@ provider:
           Resource:
             - Fn::GetAtt: [ UsersTable, Arn ]
   environment:
-    USERS_TABLE: ${self:custom.tableName}
+    TODO_TABLE: ${self:custom.tableName}
 
 functions:
-  api:
-    handler: handler.handler
+  create:
+    handler: handler/createTodo.createTodo
     events:
-      - httpApi: '*'
+      - http:
+          path: todos
+          method: post
+          cors: true
 
 resources:
   Resources:
